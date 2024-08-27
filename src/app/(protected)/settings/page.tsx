@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Poppins } from "next/font/google";
-import { auth } from "@/auth";
+import { auth, signOut } from "@/auth";
+import { Button } from "@/components/ui/button";
 
 const font = Poppins({
   subsets: ["latin"],
@@ -10,10 +11,18 @@ const font = Poppins({
 const page = async () => {
   const session = await auth();
   return (
-    <div className="w-full h-full flex items-center justify-center">
-      <h1 className={cn("text-4xl font-semibold", font.className)}>
+    <div className="w-full h-fit flex gap-x-4 items-center  justify-center mt-[200px]">
+      <h1 className={cn("text-xl font-semibold", font.className)}>
         {JSON.stringify(session)}
       </h1>
+      <form
+        action={async () => {
+          "use server";
+          await signOut();
+        }}
+      >
+        <Button type="submit">Sign out</Button>
+      </form>
     </div>
   );
 };
