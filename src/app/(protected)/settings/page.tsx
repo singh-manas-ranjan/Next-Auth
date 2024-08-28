@@ -11,8 +11,8 @@ const font = Poppins({
 const page = async () => {
   const session = await auth();
   return (
-    <div className="w-full h-fit flex gap-x-4 items-center  justify-center mt-[200px]">
-      <h1 className={cn("text-xl font-semibold", font.className)}>
+    <div className="w-full h-fit flex flex-wrap gap-x-4 items-center  justify-center mt-[200px]">
+      <h1 className={cn("text-sm font-semibold", font.className)}>
         {JSON.stringify(session)}
       </h1>
       <form
