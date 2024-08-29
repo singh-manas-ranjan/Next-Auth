@@ -37,6 +37,17 @@ export const {
     },
   },
   callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider !== "credentials") {
+        return true;
+      }
+      const existingUser = await getUserById(user.id);
+      if (!existingUser?.emailVerified) {
+        return false;
+      }
+      return true;
+    },
+
     async session({ session, token }) {
       console.log({ SessionToken: token });
       if (token.sub && session.user) {
