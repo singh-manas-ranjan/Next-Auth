@@ -3,7 +3,10 @@
 import * as z from "zod";
 import { ResetSchema } from "@/schemas";
 import { getUserByEmail } from "@/data/user";
-import { sendPasswordResetEmail } from "@/lib/mail";
+import {
+  sendPasswordResetEmail,
+  sendPasswordResetEmailUsingNodeMailer,
+} from "@/lib/mail";
 import { generatePasswordResetToken } from "@/lib/tokens";
 
 export const reset = async (values: z.infer<typeof ResetSchema>) => {
@@ -21,7 +24,13 @@ export const reset = async (values: z.infer<typeof ResetSchema>) => {
   }
 
   const passwordResetToken = await generatePasswordResetToken(email);
-  await sendPasswordResetEmail(
+  // await sendPasswordResetEmail(
+  //   passwordResetToken.email,
+  //   passwordResetToken.token
+  // );
+
+  //Send verification email using nodemailer
+  await sendPasswordResetEmailUsingNodeMailer(
     passwordResetToken.email,
     passwordResetToken.token
   );
