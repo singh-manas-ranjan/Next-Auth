@@ -1,10 +1,12 @@
 import { Resend } from "resend";
 import nodemailer from "nodemailer";
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendVerificationEmail = async (email: string, token: string) => {
-  const confirmLink = `http://localhost:3000/auth/new-verification?token=${token}`;
+  const confirmLink = `${baseUrl}/auth/new-verification?token=${token}`;
 
   await resend.emails.send({
     from: "onbording@resend.dev",
@@ -15,7 +17,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
 };
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
-  const resetLink = `http://localhost:3000/auth/new-password?token=${token}`;
+  const resetLink = `${baseUrl}/auth/new-password?token=${token}`;
 
   await resend.emails.send({
     from: "onbording@resend.dev",
@@ -30,7 +32,7 @@ export const sendVerificationEmailUsingNodeMailer = async (
   email: string,
   token: string
 ) => {
-  const confirmLink = `http://localhost:3000/auth/new-verification?token=${token}`;
+  const confirmLink = `${baseUrl}/auth/new-verification?token=${token}`;
   const { SMTP_EMAIL, SMTP_PASSWORD } = process.env;
 
   const transporter = nodemailer.createTransport({
@@ -135,7 +137,7 @@ export const sendPasswordResetEmailUsingNodeMailer = async (
   email: string,
   token: string
 ) => {
-  const resetLink = `http://localhost:3000/auth/new-password?token=${token}`;
+  const resetLink = `${baseUrl}/auth/new-password?token=${token}`;
   const { SMTP_EMAIL, SMTP_PASSWORD } = process.env;
 
   const transporter = nodemailer.createTransport({
